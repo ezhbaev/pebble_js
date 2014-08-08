@@ -1,9 +1,37 @@
 <?php
-header('Content-Type: application/json');
+
 
 file_put_contents('logs/log.txt', print_r($_GET, true)."\n\n", FILE_APPEND);
 
 
+
+if (isset($_GET['settings']))
+{
+
+
+
+if (!$_GET['save'])
+{
+?>
+
+<input name='url' id='url' value='http://ezhbaev.ru/pebble/myapp/'>
+<button onclick='SaveSett();'>Save</button>
+<script>
+function SaveSett()
+{
+    url = document.getElementById('url').value;
+    var options = { color: 'white', server_url: url };
+document.location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
+}
+</script>
+<?php
+}
+
+
+die;
+}
+
+header('Content-Type: application/json');
 if (!isset($_GET['sec']))
 {
 $sections = array();
@@ -33,6 +61,4 @@ if ($lvl==0 && $sec==0 && $item==1)
 }
 
 
-
 echo json_encode($result);
-
